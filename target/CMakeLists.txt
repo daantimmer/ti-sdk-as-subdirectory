@@ -15,7 +15,7 @@ target_link_libraries(target PRIVATE
 target_sources(target PRIVATE
     Atomic.cpp
     Main.cpp
-    Ccfg.cpp
+    Ccfg.c
 )
 
 target_link_options(target PRIVATE
