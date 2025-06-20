@@ -333,7 +333,8 @@ ti_init_package(NAMESPACE TrustZone)
 ti_add_library(tfm_dependencies_cc26x4 INTERFACE ARCH all)
 
 # This must appear ahead of the TFM includes to find the correct sid.h
-target_include_directories(tfm_dependencies_cc26x4 BEFORE INTERFACE ${CMAKE_SOURCE_DIR}/tfm_s/cc26x4/build_dependencies)
+# this directory does _not_ exist!
+# target_include_directories(tfm_dependencies_cc26x4 BEFORE INTERFACE ${CMAKE_SOURCE_DIR}/tfm_s/cc26x4/build_dependencies)
 
 if(TI_INTERNAL_BUILD)
     target_include_directories(
@@ -348,22 +349,33 @@ if(TI_INTERNAL_BUILD)
                   ${MBEDTLS_INSTALL_DIR}/source/third_party/mbedtls/ti
     )
 else()
-    target_include_directories(
-        tfm_dependencies_cc26x4
-        INTERFACE ${CMAKE_SOURCE_DIR}/source/
-                  ${CMAKE_SOURCE_DIR}/source/third_party/tfm/interface/include
-                  ${CMAKE_SOURCE_DIR}/source/third_party/tfm/secure_fw/include
-                  ${CMAKE_SOURCE_DIR}/source/third_party/tfm/config
-                  ${CMAKE_SOURCE_DIR}/tfm_s/build/cc26x4/production_full/Release/export/tfm/inc
-                  ${CMAKE_SOURCE_DIR}/source/third_party/mbedtls/include
-                  ${CMAKE_SOURCE_DIR}/source/third_party/mbedtls/ti
-    )
+
+# disabled because of the following:
+# [cmake] CMake Error in external/simplelink-lowpower-f3-sdk-lpf3-8.40.02.01/source/ti/drivers/CMakeLists.txt:
+# [cmake]   Target "tfm_dependencies_cc26x4" INTERFACE_INCLUDE_DIRECTORIES property
+# [cmake]   contains path:
+# [cmake]
+# [cmake]     "/workspaces/ti-sdk-as-subdirectory/source/"
+# [cmake]
+# [cmake]   which is prefixed in the source directory.
+
+    # target_include_directories(
+    #     tfm_dependencies_cc26x4
+    #     INTERFACE ${CMAKE_SOURCE_DIR}/source/
+    #               ${CMAKE_SOURCE_DIR}/source/third_party/tfm/interface/include
+    #               ${CMAKE_SOURCE_DIR}/source/third_party/tfm/secure_fw/include
+    #               ${CMAKE_SOURCE_DIR}/source/third_party/tfm/config
+    #               ${CMAKE_SOURCE_DIR}/tfm_s/build/cc26x4/production_full/Release/export/tfm/inc
+    #               ${CMAKE_SOURCE_DIR}/source/third_party/mbedtls/include
+    #               ${CMAKE_SOURCE_DIR}/source/third_party/mbedtls/ti
+    # )
 endif()
 
 ti_add_library(tfm_dependencies_cc27xx INTERFACE ARCH all)
 
 # This must appear ahead of the TFM includes to find the correct sid.h
-target_include_directories(tfm_dependencies_cc27xx BEFORE INTERFACE ${CMAKE_SOURCE_DIR}/tfm_s/cc27xx/build_dependencies)
+# this directory does _not_ exist!
+# target_include_directories(tfm_dependencies_cc27xx BEFORE INTERFACE ${CMAKE_SOURCE_DIR}/tfm_s/cc27xx/build_dependencies)
 
 if(TI_INTERNAL_BUILD)
     target_include_directories(
@@ -377,16 +389,26 @@ if(TI_INTERNAL_BUILD)
                   ${TFM_INSTALL_DIR}/source/third_party/tfm/secure_fw/partitions/internal_trusted_storage
     )
 else()
-    target_include_directories(
-        tfm_dependencies_cc27xx
-        INTERFACE ${CMAKE_SOURCE_DIR}/source/
-                  ${CMAKE_SOURCE_DIR}/source/third_party/tfm/config
-                  ${CMAKE_SOURCE_DIR}/source/third_party/tfm/interface/include
-                  ${CMAKE_SOURCE_DIR}/source/third_party/tfm/platform/ext/driver
-                  ${CMAKE_SOURCE_DIR}/source/third_party/tfm/platform/include
-                  ${CMAKE_SOURCE_DIR}/source/third_party/tfm/secure_fw/include
-                  ${CMAKE_SOURCE_DIR}/source/third_party/tfm/secure_fw/partitions/internal_trusted_storage
-    )
+
+# disabled because of the following:
+# [cmake] CMake Error in external/simplelink-lowpower-f3-sdk-lpf3-8.40.02.01/source/ti/drivers/CMakeLists.txt:
+# [cmake]   Target "tfm_dependencies_cc27xx" INTERFACE_INCLUDE_DIRECTORIES property
+# [cmake]   contains path:
+# [cmake]
+# [cmake]     "/workspaces/ti-sdk-as-subdirectory/source/"
+# [cmake]
+# [cmake]   which is prefixed in the source directory.
+
+    # target_include_directories(
+    #     tfm_dependencies_cc27xx
+    #     INTERFACE ${CMAKE_SOURCE_DIR}/source/
+    #               ${CMAKE_SOURCE_DIR}/source/third_party/tfm/config
+    #               ${CMAKE_SOURCE_DIR}/source/third_party/tfm/interface/include
+    #               ${CMAKE_SOURCE_DIR}/source/third_party/tfm/platform/ext/driver
+    #               ${CMAKE_SOURCE_DIR}/source/third_party/tfm/platform/include
+    #               ${CMAKE_SOURCE_DIR}/source/third_party/tfm/secure_fw/include
+    #               ${CMAKE_SOURCE_DIR}/source/third_party/tfm/secure_fw/partitions/internal_trusted_storage
+    # )
 endif()
 
 ti_export_package()
