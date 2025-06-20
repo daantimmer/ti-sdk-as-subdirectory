@@ -1,2 +1,3 @@
-int main()
-{}
+#include "FreeRTOS.h"
+
+int main() { vTaskStartScheduler(); }

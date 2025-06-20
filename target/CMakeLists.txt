@@ -1,4 +1,5 @@
 find_package(DeviceCC23X0R5 REQUIRED)
+find_package(FreeRTOS REQUIRED)
 
 add_executable(target)
 
