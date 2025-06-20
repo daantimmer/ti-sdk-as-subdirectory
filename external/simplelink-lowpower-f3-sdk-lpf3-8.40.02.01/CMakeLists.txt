@@ -9,7 +9,8 @@ set(CMAKE_ONLY_WRAPPER_COMPONENTS 1)
 set(CMAKE_ONLY_LOCAL_PLATFORMS 1)
 
 # Setup the CMake build environment
-set(CMAKE_COMMON_INSTALL_DIR ${CMAKE_SOURCE_DIR})
+# set(CMAKE_COMMON_INSTALL_DIR ${CMAKE_SOURCE_DIR})
+set(CMAKE_COMMON_INSTALL_DIR ${CMAKE_CURRENT_LIST_DIR})
 include(source/cmake/scripts/cmake-common/Configure.cmake)
 project(coresdk LANGUAGES)
 
