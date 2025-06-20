@@ -57,7 +57,7 @@ else()
     # For external builds, we always want to check local platforms
     # They are the only platforms available without imports.conan.mak
     set(CMAKE_ONLY_LOCAL_PLATFORMS 1)
-    set(CMAKE_ONLY_WRAPPER_COMPONENTS 1)
+    set(CMAKE_ONLY_WRAPPER_COMPONENTS 0)
 endif()
 
 include(${CMAKE_COMMON_INSTALL_DIR}/source/cmake/scripts/cmake-common/LibraryTools.cmake)

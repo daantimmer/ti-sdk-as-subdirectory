@@ -31,7 +31,10 @@
         {
             "name": "cc2340r5",
             "inherits": "TI",
-            "toolchainFile": "${sourceDir}/ticlang.cmake"
+            "toolchainFile": "${sourceDir}/ticlang.cmake",
+            "cacheVariables": {
+                "CMAKE_COMPONENT_DIRS": "${sourceDir}/external/simplelink-lowpower-f3-sdk-lpf3-8.40.02.01/source/cmake/components"
+            }
         }
     ],
     "buildPresets": [
