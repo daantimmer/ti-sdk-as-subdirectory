@@ -19,7 +19,6 @@ target_sources(target PRIVATE
 )
 
 target_link_options(target PRIVATE
-    "LINKER:-m$<TARGET_FILE_DIR:target>/$<TARGET_FILE_BASE_NAME:target>.map"
     "${CMAKE_CURRENT_LIST_DIR}/cc23x0r5.cmd"
 )
 
