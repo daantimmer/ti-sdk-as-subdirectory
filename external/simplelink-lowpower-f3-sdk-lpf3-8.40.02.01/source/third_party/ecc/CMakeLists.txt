@@ -42,7 +42,7 @@ if (TI_INTERNAL_BUILD)
     if ("m4" IN_LIST SUPPORTED_ARCHITECTURES)
         ti_add_library(
             ecc_cc13x1_cc26x1
-            SOURCES ${SOURCES_CC13X1_CC26X1} ${CMAKE_SOURCE_DIR}/source/third_party/ecc/include/ECCSW.h
+            SOURCES ${SOURCES_CC13X1_CC26X1} ${CMAKE_COMMON_INSTALL_DIR}/source/third_party/ecc/include/ECCSW.h
             ARCH m4
             LINK_PUBLIC CMakeCommon::${TI_TOOLCHAIN_NAME}_m4
         )
@@ -52,28 +52,28 @@ if (TI_INTERNAL_BUILD)
         ti_add_library(
             ecc_cc27xx
             OUTPUT_NAME ecc
-            SOURCES ${SOURCES_CC27XX} ${CMAKE_SOURCE_DIR}/source/third_party/ecc/include/ECCSW.h
+            SOURCES ${SOURCES_CC27XX} ${CMAKE_COMMON_INSTALL_DIR}/source/third_party/ecc/include/ECCSW.h
             ARCH m33f
             LINK_PUBLIC CMakeCommon::${TI_TOOLCHAIN_NAME}_m33f
         )
-        target_include_directories(ecc_cc27xx INTERFACE "${CMAKE_SOURCE_DIR}/source")
+        target_include_directories(ecc_cc27xx INTERFACE "${CMAKE_COMMON_INSTALL_DIR}/source")
 
         if (${TI_TOOLCHAIN_NAME} STREQUAL "ticlang" OR ${TI_TOOLCHAIN_NAME} STREQUAL "gcc")
             target_sources(ecc_cc27xx PUBLIC ${INVIA_LIB_INSTALL_DIR}/source/third_party/ecc/src/lowlevelapi_m0_gnu.s)
         elseif (${TI_TOOLCHAIN_NAME} STREQUAL "iar")
             target_sources(ecc_cc27xx PUBLIC ${INVIA_LIB_INSTALL_DIR}/source/third_party/ecc/src/lowlevelapi_m0_iar.s)
-        endif ()        
+        endif ()
     endif ()
 
     if ("m0p" IN_LIST SUPPORTED_ARCHITECTURES)
         ti_add_library(
             ecc_cc23x0
             OUTPUT_NAME ecc
-            SOURCES ${SOURCES_CC23X0} ${CMAKE_SOURCE_DIR}/source/third_party/ecc/include/ECCSW.h
+            SOURCES ${SOURCES_CC23X0} ${CMAKE_COMMON_INSTALL_DIR}/source/third_party/ecc/include/ECCSW.h
             ARCH m0p
             LINK_PUBLIC CMakeCommon::${TI_TOOLCHAIN_NAME}_m0p
         )
-        target_include_directories(ecc_cc23x0 INTERFACE "${CMAKE_SOURCE_DIR}/source")
+        target_include_directories(ecc_cc23x0 INTERFACE "${CMAKE_COMMON_INSTALL_DIR}/source")
 
         if (${TI_TOOLCHAIN_NAME} STREQUAL "ticlang" OR ${TI_TOOLCHAIN_NAME} STREQUAL "gcc")
             target_sources(ecc_cc23x0 PUBLIC ${INVIA_LIB_INSTALL_DIR}/source/third_party/ecc/src/lowlevelapi_m0_gnu.s)
@@ -84,25 +84,25 @@ if (TI_INTERNAL_BUILD)
 
     get_property(libraries DIRECTORY PROPERTY TI_PACKAGE_LIBRARIES)
     foreach (library_name ${libraries})
-        target_include_directories(${library_name} PRIVATE "${CMAKE_SOURCE_DIR}/source")
+        target_include_directories(${library_name} PRIVATE "${CMAKE_COMMON_INSTALL_DIR}/source")
     endforeach ()
 
     # Manually run commands for ECC header deployment
     add_custom_command(
         OUTPUT
-            ${CMAKE_SOURCE_DIR}/source/third_party/ecc/include
-            ${CMAKE_SOURCE_DIR}/source/third_party/ecc/include/ECCSW.h
+            ${CMAKE_COMMON_INSTALL_DIR}/source/third_party/ecc/include
+            ${CMAKE_COMMON_INSTALL_DIR}/source/third_party/ecc/include/ECCSW.h
         DEPENDS ${INVIA_LIB_INSTALL_DIR}/source/third_party/ecc/include/ECCSW.h
         COMMENT Copying ECC header files
-        COMMAND bash -c "mkdir -p ${CMAKE_SOURCE_DIR}/source/third_party/ecc/include"
-        COMMAND bash -c "cp ${INVIA_LIB_INSTALL_DIR}/source/third_party/ecc/include/*.h ${CMAKE_SOURCE_DIR}/source/third_party/ecc/include"
+        COMMAND bash -c "mkdir -p ${CMAKE_COMMON_INSTALL_DIR}/source/third_party/ecc/include"
+        COMMAND bash -c "cp ${INVIA_LIB_INSTALL_DIR}/source/third_party/ecc/include/*.h ${CMAKE_COMMON_INSTALL_DIR}/source/third_party/ecc/include"
     )
 
-    add_library(ecc_deploy INTERFACE ${CMAKE_SOURCE_DIR}/source/third_party/ecc/include)
+    add_library(ecc_deploy INTERFACE ${CMAKE_COMMON_INSTALL_DIR}/source/third_party/ecc/include)
 
     set_target_properties(
         ecc_deploy PROPERTIES
-        ADDITIONAL_CLEAN_FILES "${CMAKE_SOURCE_DIR}/source/third_party/ecc/include"
+        ADDITIONAL_CLEAN_FILES "${CMAKE_COMMON_INSTALL_DIR}/source/third_party/ecc/include"
     )
 else()
     ti_add_library(ecc_cc13x1_cc26x1 INTERFACE ARCH m4)

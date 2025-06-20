@@ -99,7 +99,7 @@ endfunction()
 # component_install_dir: The INSTALL_DIR variable, e.g. TIUTILS_INSTALL_DIR
 #
 # If the variable is set, and this is an internal build, the existing value is
-# returned. Otherwise, CMAKE_SOURCE_DIR is returned.
+# returned. Otherwise, CMAKE_COMMON_INSTALL_DIR is returned.
 function(get_install_dir component_install_dir)
     if(TI_INTERNAL_BUILD AND ${component_install_dir})
         set(${component_install_dir} ${${component_install_dir}} PARENT_SCOPE)
@@ -315,7 +315,7 @@ endfunction()
 # INTERFACE is for interface libraries, which cannot have PUBLIC properties, and is only inherited.
 function(ti_export_sdk_include library_name include_type relative_path)
     target_include_directories(
-        ${library_name} ${include_type} "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/${relative_path}>"
+        ${library_name} ${include_type} "$<BUILD_INTERFACE:${CMAKE_COMMON_INSTALL_DIR}/${relative_path}>"
         "$<INSTALL_INTERFACE:${relative_path}>"
     )
 endfunction()
@@ -354,17 +354,17 @@ function(ti_create_targets)
         message(FATAL_ERROR "You must provide TARGETS")
     endif()
 
-    # This controls the 'relative root' of generated packages, and should probably always be CMAKE_SOURCE_DIR
+    # This controls the 'relative root' of generated packages, and should probably always be CMAKE_COMMON_INSTALL_DIR
     # If the user has already configured it, we can skip this
     if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-        set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}" CACHE PATH "..." FORCE)
+        set(CMAKE_INSTALL_PREFIX "${CMAKE_COMMON_INSTALL_DIR}" CACHE PATH "..." FORCE)
     endif()
 
     # Get the relative path from top-level cmake to current, so it can be used or transplanted to install prefix
     # Destination must be relative, and becomes "INSTALL_PREFIX/<whatever>" in final use, so we make "current" be only the relative
     # part from the project root to here, then finally normalize the end result to get rid of any `../..`s.
     cmake_path(
-        RELATIVE_PATH CMAKE_CURRENT_LIST_DIR BASE_DIRECTORY "${CMAKE_SOURCE_DIR}" OUTPUT_VARIABLE
+        RELATIVE_PATH CMAKE_CURRENT_LIST_DIR BASE_DIRECTORY "${CMAKE_COMMON_INSTALL_DIR}" OUTPUT_VARIABLE
         CMAKE_CURRENT_LIST_DIR_RELATIVE_SOURCE_DIR
     )
     if(CREATE_TARGETS_OUTPUT_FOLDER)
@@ -443,10 +443,10 @@ function(ti_export_package)
         endif()
     endif()
 
-    # This controls the 'relative root' of generated packages, and should probably always be CMAKE_SOURCE_DIR
+    # This controls the 'relative root' of generated packages, and should probably always be CMAKE_COMMON_INSTALL_DIR
     # If the user has already configured it, we can skip this
     if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-        set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}" CACHE PATH "..." FORCE)
+        set(CMAKE_INSTALL_PREFIX "${CMAKE_COMMON_INSTALL_DIR}" CACHE PATH "..." FORCE)
     endif()
 
     # This function has two modes: creating platform packages (device support) and components

@@ -32,7 +32,7 @@ ti_init_package(NAMESPACE TiUtils)
 
 ti_add_library(tiutils INTERFACE ARCH all)
 target_include_directories(
-    tiutils INTERFACE "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/source>" "$<INSTALL_INTERFACE:source>"
+    tiutils INTERFACE "$<BUILD_INTERFACE:${CMAKE_COMMON_INSTALL_DIR}/source>" "$<INSTALL_INTERFACE:source>"
 )
 
 ti_export_package()
