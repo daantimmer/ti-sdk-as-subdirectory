@@ -1,0 +1,54 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "defaults",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "installDir": "${sourceDir}/install",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "On"
+            }
+        },
+        {
+            "name": "TI",
+            "hidden": true,
+            "inherits": "defaults",
+            "generator": "Ninja Multi-Config",
+            "environment": {
+                "TICLANG_ARMCOMPILER": "/opt/ti-cgt-armllvm_3.2.2.LTS/"
+            },
+            "cacheVariables": {
+                "CMAKE_CONFIGURATION_TYPES": "Debug;RelWithDebInfo;MinSizeRel",
+                "CN_BUILD_TESTS": "Off",
+                "EMIL_GENERATE_PACKAGE_CONFIG": false,
+                "TI_MIN_CMAKE_VERSION": "3.21.3",
+                "TICLANG_ARMCOMPILER": "/opt/ti-cgt-armllvm_3.2.2.LTS/",
+                "CMAKE_MESSAGE_LOG_LEVEL": "VERBOSE",
+                "EMIL_INCLUDE_SEGGER_RTT": "On"
+            }
+        },
+        {
+            "name": "cc2340r5",
+            "inherits": "TI",
+            "toolchainFile": "${sourceDir}/ticlang.cmake"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "cc2340r5-RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "configurePreset": "cc2340r5"
+        },
+        {
+            "name": "cc2340r5-MinSizeRel",
+            "configuration": "MinSizeRel",
+            "configurePreset": "cc2340r5"
+        },
+        {
+            "name": "cc2340r5-Debug",
+            "configuration": "Debug",
+            "configurePreset": "cc2340r5"
+        }
+    ]
+}
